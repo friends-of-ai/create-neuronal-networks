@@ -8,11 +8,9 @@ This framework creates some neuronal networks. It shows and provides you a colle
 
 ## B. Literature
 
-Empfohlen für den praktischen Einsatz:
+Recommended for practical use:
 
-* [Praxiseinstieg Deep Learning](https://www.oreilly.de/buecher/12840/9783960090540-praxiseinstieg-deep-learning.html)
-* [Machine Learning – kurz & gut](https://www.oreilly.de/buecher/12870/9783960090526-machine-learning-%E2%80%93-kurz-%26-gut.html)
-* [Neuronale Netze selbst programmieren](https://www.oreilly.de/buecher/12892/9783960090434-neuronale-netze-selbst-programmieren.html)
+* Coming soon..
 
 ## C. Sources
 
