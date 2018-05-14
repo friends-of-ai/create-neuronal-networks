@@ -4,6 +4,8 @@ This framework creates some neuronal networks. It shows and provides you a colle
 
 ## 0. Introduction
 
+This framework uses needs an analysis library like this: [js-analysis](https://github.com/bjoern-hempel/js-analysis)
+
 Coming soon..
 
 ## 1. Predictors
