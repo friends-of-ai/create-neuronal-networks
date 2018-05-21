@@ -26,7 +26,7 @@ class NeuronalNetwork {
             this.weightMatrices.push(new Matrix(weightMatrix));
         }
 
-        console.log(this.weightMatrices[0].multiply(new Matrix([[2], [2]])).array);
-        console.log(this.weightMatrices[0].multiply(new Matrix([[1], [1]])).array);
+        console.log(this.weightMatrices[0].multiply(new Vector([2, 2])).array);
+        console.log(this.weightMatrices[0].multiply(new Vector([1, 1])).array);
     }
 }
