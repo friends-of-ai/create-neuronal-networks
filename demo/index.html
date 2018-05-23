@@ -12,11 +12,11 @@
 <body>
     <script>
 
-        var neuronalNetwork = new NeuronalNetwork([3, 3]);
+        var neuronalNetwork = new NeuronalNetwork([2, 2], true);
 
-        var output = neuronalNetwork.calculateOutput(new Vector([0.9, 0.1, 0.8]));
+        var output = neuronalNetwork.calculateOutput(new Vector([0.7, 0.6]));
 
-        console.log(output.array);
+        console.log(JSON.stringify(output.array)); // prints [0.6546591654993577,0.5499865411657244]
 
     </script>
 </body>

@@ -8,8 +8,9 @@ class NeuronalNetwork {
     /**
      * The constructor of the NeuronalNetwork.
      */
-    constructor(planes) {
+    constructor(planes, bias) {
         this.planes = planes;
+        this.bias   = bias ? true : false;
 
         this.weightMatrices = [];
         this.inputs = [];
@@ -27,8 +28,11 @@ class NeuronalNetwork {
         //
         //     this.weightMatrices.push(new Matrix(weightMatrix));
         // }
-        this.weightMatrices.push(new Matrix([[0.9, 0.3, 0.4], [0.2, 0.8, 0.2], [0.1, 0.5, 0.6]]));
-        this.weightMatrices.push(new Matrix([[0.3, 0.7, 0.5], [0.6, 0.5, 0.2], [0.8, 0.1, 0.9]]));
+        //this.weightMatrices.push(new Matrix([[0.9, 0.3, 0.4], [0.2, 0.8, 0.2], [0.1, 0.5, 0.6]]));
+        //this.weightMatrices.push(new Matrix([[0.3, 0.7, 0.5], [0.6, 0.5, 0.2], [0.8, 0.1, 0.9]]));
+
+        this.weightMatrices.push(new Matrix([[0.3, 0.8, 0.5], [-0.2, -0.6, 0.7]]));
+        this.weightMatrices.push(new Matrix([[0.2, 0.4, 0.3], [0.1, -0.4, 0.9]]));
     }
 
     /**
@@ -41,7 +45,7 @@ class NeuronalNetwork {
         this.outputs.push(this.inputs[0]);
 
         for (var i = 0; i < this.planes.length; i++) {
-            this.inputs.push(this.weightMatrices[i].multiply(this.outputs[i]));
+            this.inputs.push(this.weightMatrices[i].multiply(this.bias ? this.outputs[i].unshift(1) : this.outputs[i]));
 
             var output = this.inputs[i + 1].callback(function (element) {
                 return 1 / (1 + Math.exp(-element));
