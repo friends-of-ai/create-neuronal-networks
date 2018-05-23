@@ -8,15 +8,28 @@ This framework uses needs an analysis library like this: [js-analysis](https://g
 
 Coming soon..
 
-## 1. Predictors
+## 1. The elements
+
+### 1.1 Predictors
 
 Coming soon..
 
-## 2. Perceptron
+### 1.2 Perceptron
 
 Coming soon..
 
-## 3. The network (neuronal network)
+### 1.3 The network (neuronal network)
+
+```javascript
+var neuronalNetwork = new NeuronalNetwork([3, 3]);
+
+var input  = new Vector([0.9, 0.1, 0.8]);
+var output = neuronalNetwork.calculateOutput(input);
+
+console.log(JSON.stringify(output.array)); // prints [0.7263033450139793,0.7085980724248232,0.778097059561142]
+```
+
+## 2. Test the libraries
 
 Coming soon..
 
