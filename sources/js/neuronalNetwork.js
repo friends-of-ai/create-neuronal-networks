@@ -45,7 +45,7 @@ class NeuronalNetwork {
         this.outputs.push(this.inputs[0]);
 
         for (var i = 0; i < this.planes.length; i++) {
-            this.inputs.push(this.weightMatrices[i].multiply(this.bias ? this.outputs[i].unshift(1) : this.outputs[i]));
+            this.inputs.push(this.weightMatrices[i].multiply(true, this.bias ? this.outputs[i].unshift(1) : this.outputs[i]));
 
             var output = this.inputs[i + 1].callback(function (element) {
                 return 1 / (1 + Math.exp(-element));
