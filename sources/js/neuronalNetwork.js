@@ -9,8 +9,9 @@ class NeuronalNetwork {
      * The constructor of the NeuronalNetwork.
      */
     constructor(planes, bias) {
-        this.planes = planes;
-        this.bias   = bias ? true : false;
+        this.planes    = planes;
+        this.bias      = bias ? true : false;
+        this.learnRate = 1;
 
         this.weightMatrices = [];
 
@@ -34,10 +35,39 @@ class NeuronalNetwork {
     }
 
     /**
+     * Trains the
+     *
+     * @param {Vector} inputVector
+     * @param {Vector} expectedVector
+     * @return {Array}
+     */
+    train(inputVector, expectedVector) {
+        var forwardPropagation = this.forwardPropagation(inputVector);
+
+        var backPropagation = this.backPropagation(forwardPropagation, expectedVector);
+
+        console.log(backPropagation);
+
+        forwardPropagation.inputs.map(function(vector, index) {
+            console.log('input ' + index, JSON.stringify(vector.array));
+        });
+
+        forwardPropagation.outputs.map(function(vector, index) {
+            console.log('output ' + index, JSON.stringify(vector.array));
+        });
+
+        forwardPropagation.weightMatrices.map(function(matrix, index) {
+            console.log('weightMatrix ' + index, JSON.stringify(matrix.array));
+        });
+
+        return forwardPropagation.weightMatrices;
+    }
+
+    /**
      * Calculate the output of given input.
      *
      * @param vector
-     * @returns {*}
+     * @returns {Vector}
      */
     calculateOutput(vector) {
         var forwardPropagation = this.forwardPropagation(vector);
@@ -61,6 +91,7 @@ class NeuronalNetwork {
      * Do a forward propagation.
      *
      * @param {Vector} vector
+     * @return {Object}
      */
     forwardPropagation(vector) {
         var inputs  = [];
@@ -89,6 +120,26 @@ class NeuronalNetwork {
     }
 
     /**
+     * Do a back propagation.
+     *
+     * @param forwardPropagation
+     * @param expectedVector
+     */
+    backPropagation(forwardPropagation, expectedVector) {
+        // var dO1 = this.constructor.derivationFunctionSigmoid(forwardPropagation.inputs[2].array[0]) * (expectedVector.array[0] - forwardPropagation.outputs[2].array[0]);
+        // var dO2 = this.constructor.derivationFunctionSigmoid(forwardPropagation.inputs[2].array[1]) * (expectedVector.array[1] - forwardPropagation.outputs[2].array[1]);
+        //
+        // console.log(dO1);
+        // console.log(dO2);
+
+        var dO1 = this.constructor.derivationFunctionSigmoidCalculated(forwardPropagation.outputs[2].array[0]) * (expectedVector.array[0] - forwardPropagation.outputs[2].array[0]);
+        var dO2 = this.constructor.derivationFunctionSigmoidCalculated(forwardPropagation.outputs[2].array[1]) * (expectedVector.array[1] - forwardPropagation.outputs[2].array[1]);
+
+        console.log(dO1);
+        console.log(dO2);
+    }
+
+    /**
      * The sigmoid activation function.
      *
      * @param {number} value
@@ -96,5 +147,25 @@ class NeuronalNetwork {
      */
     static activationFunctionSigmoid(value) {
         return 1 / (1 + Math.exp(-value));
+    }
+
+    /**
+     * The derivation of the sigmoid activation function.
+     *
+     * @param value
+     * @returns {number}
+     */
+    static derivationFunctionSigmoid(value) {
+        return this.activationFunctionSigmoid(value) * (1 - this.activationFunctionSigmoid(value));
+    }
+
+    /**
+     * The derivation of the sigmoid activation function.
+     *
+     * @param value
+     * @returns {number}
+     */
+    static derivationFunctionSigmoidCalculated(value) {
+        return value * (1 - value);
     }
 }
