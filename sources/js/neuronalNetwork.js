@@ -13,8 +13,6 @@ class NeuronalNetwork {
         this.bias   = bias ? true : false;
 
         this.weightMatrices = [];
-        this.inputs = [];
-        this.outputs = [];
 
         // for (var i = 0; i < this.planes.length - 1; i++) {
         //     var weightMatrix = [];
@@ -36,24 +34,67 @@ class NeuronalNetwork {
     }
 
     /**
-     * Calculate the output.
+     * Calculate the output of given input.
      *
-     * @param vector {Vector}
+     * @param vector
+     * @returns {*}
      */
     calculateOutput(vector) {
-        this.inputs.push(vector);
-        this.outputs.push(this.inputs[0]);
+        var forwardPropagation = this.forwardPropagation(vector);
+
+        forwardPropagation.inputs.map(function(vector, index) {
+            console.log('input ' + index, JSON.stringify(vector.array));
+        });
+
+        forwardPropagation.outputs.map(function(vector, index) {
+            console.log('output ' + index, JSON.stringify(vector.array));
+        });
+
+        forwardPropagation.weightMatrices.map(function(matrix, index) {
+            console.log('weightMatrix ' + index, JSON.stringify(matrix.array));
+        });
+
+        return forwardPropagation.outputs[forwardPropagation.outputs.length - 1];
+    }
+
+    /**
+     * Do a forward propagation.
+     *
+     * @param {Vector} vector
+     */
+    forwardPropagation(vector) {
+        var inputs  = [];
+        var outputs = [];
+
+        inputs.push(new Vector(vector.array));
+        outputs.push(new Vector(vector.array));
 
         for (var i = 0; i < this.planes.length; i++) {
-            this.inputs.push(this.weightMatrices[i].multiply(true, this.bias ? this.outputs[i].unshift(1) : this.outputs[i]));
+            var weightMatrix = this.weightMatrices[i];
 
-            var output = this.inputs[i + 1].callback(function (element) {
-                return 1 / (1 + Math.exp(-element));
-            });
+            var input = weightMatrix.multiply(true, this.bias ? outputs[i].unshift(1) : outputs[i]);
 
-            this.outputs.push(output);
+            inputs.push(input);
+
+            var output = inputs[i + 1].callback(this.constructor.activationFunctionSigmoid);
+
+            outputs.push(output);
         }
 
-        return this.outputs[this.outputs.length - 1];
+        return {
+            inputs: inputs,
+            outputs: outputs,
+            weightMatrices: this.weightMatrices
+        };
+    }
+
+    /**
+     * The sigmoid activation function.
+     *
+     * @param {number} value
+     * @returns {number}
+     */
+    static activationFunctionSigmoid(value) {
+        return 1 / (1 + Math.exp(-value));
     }
 }
