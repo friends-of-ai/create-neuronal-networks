@@ -126,17 +126,26 @@ class NeuronalNetwork {
      * @param expectedVector
      */
     backPropagation(forwardPropagation, expectedVector) {
-        // var dO1 = this.constructor.derivationFunctionSigmoid(forwardPropagation.inputs[2].array[0]) * (expectedVector.array[0] - forwardPropagation.outputs[2].array[0]);
-        // var dO2 = this.constructor.derivationFunctionSigmoid(forwardPropagation.inputs[2].array[1]) * (expectedVector.array[1] - forwardPropagation.outputs[2].array[1]);
-        //
-        // console.log(dO1);
-        // console.log(dO2);
+        var dO1 = this.constructor.derivationFunctionSigmoidCalculated(this.constructor.activationFunctionSigmoid(forwardPropagation.inputs[2].array[0])) * (expectedVector.array[0] - forwardPropagation.outputs[2].array[0]);
+        var dO2 = this.constructor.derivationFunctionSigmoidCalculated(this.constructor.activationFunctionSigmoid(forwardPropagation.inputs[2].array[1])) * (expectedVector.array[1] - forwardPropagation.outputs[2].array[1]);
+
+        console.log(dO1);
+        console.log(dO2);
 
         var dO1 = this.constructor.derivationFunctionSigmoidCalculated(forwardPropagation.outputs[2].array[0]) * (expectedVector.array[0] - forwardPropagation.outputs[2].array[0]);
         var dO2 = this.constructor.derivationFunctionSigmoidCalculated(forwardPropagation.outputs[2].array[1]) * (expectedVector.array[1] - forwardPropagation.outputs[2].array[1]);
 
         console.log(dO1);
         console.log(dO2);
+
+        var d = forwardPropagation.outputs[2].callback(this.constructor.derivationFunctionSigmoidCalculated).rowMultiply(
+            new Vector([
+                expectedVector.array[0] - forwardPropagation.outputs[2].array[0],
+                expectedVector.array[1] - forwardPropagation.outputs[2].array[1]
+            ])
+        );
+
+        console.log(d.array);
     }
 
     /**
@@ -150,17 +159,8 @@ class NeuronalNetwork {
     }
 
     /**
-     * The derivation of the sigmoid activation function.
-     *
-     * @param value
-     * @returns {number}
-     */
-    static derivationFunctionSigmoid(value) {
-        return this.activationFunctionSigmoid(value) * (1 - this.activationFunctionSigmoid(value));
-    }
-
-    /**
-     * The derivation of the sigmoid activation function.
+     * The derivation of the sigmoid activation function (activation function sigmoid already calculated).
+     * For usage of derivationFunctionSigmoid method: apply the method activationFunctionSigmoid to value before.
      *
      * @param value
      * @returns {number}
