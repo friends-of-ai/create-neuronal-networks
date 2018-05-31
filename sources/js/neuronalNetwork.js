@@ -134,8 +134,11 @@ class NeuronalNetwork {
      */
     backPropagation(forwardPropagation, expectedVector) {
 
+        var delta = [];
+
         /* delta from the output layer */
-        var deltaOutput = forwardPropagation.outputs[2].
+        delta.push(
+            forwardPropagation.outputs[2].
             callback(true, this.constructor.derivationFunctionSigmoidCalculated).
             rowMultiply(
                 true,
@@ -143,12 +146,19 @@ class NeuronalNetwork {
                     expectedVector.array[0] - forwardPropagation.outputs[2].array[0],
                     expectedVector.array[1] - forwardPropagation.outputs[2].array[1]
                 ])
-            );
+            )
+        );
 
-        //var deltaHidden =
+        var weightMatrix = forwardPropagation.weightMatrices[1].shiftCol(true).transpose();
+
+        delta.unshift(
+            forwardPropagation.outputs[1].shift(true).
+            callback(true, this.constructor.derivationFunctionSigmoidCalculated).
+            rowMultiply(true, weightMatrix.multiply(true, delta[delta.length - 1]))
+        );
 
         return {
-            deltaOutput: deltaOutput
+            delta: delta
         };
     }
 
