@@ -134,8 +134,8 @@ class NeuronalNetwork {
      */
     backPropagation(forwardPropagation, expectedVector) {
 
+        /* calculate the delta's */
         var delta = [];
-
         for (var i = 0; i < this.planes.length; i++) {
             if (i === 0) {
                 var vector = new Vector([
@@ -156,15 +156,15 @@ class NeuronalNetwork {
             );
         }
 
-        var wDelta = [];
-
+        /* calculate the weight matrix delta values */
+        var weightMatrixDelta = [];
         for (var i = 0; i < delta.length; i++) {
-            console.log(delta[delta.length - 1 - i]);
-            console.log(forwardPropagation.outputs[forwardPropagation.outputs.length - 2 - i].array);
+            weightMatrixDelta.unshift(delta[delta.length - 1 - i].multiplyDyadic(true, forwardPropagation.outputs[forwardPropagation.outputs.length - 2 - i]));
         }
 
         return {
-            delta: delta
+            delta: delta,
+            weightMatrixDelta: weightMatrixDelta
         };
     }
 
