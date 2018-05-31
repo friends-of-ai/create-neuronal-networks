@@ -97,19 +97,26 @@ class NeuronalNetwork {
         var inputs  = [];
         var outputs = [];
 
+        /* the input layer: input === output */
         inputs.push(new Vector(vector.array));
         outputs.push(new Vector(vector.array));
+
+        if (this.bias) {
+            outputs[outputs.length - 1].unshift(1)
+        }
 
         for (var i = 0; i < this.planes.length; i++) {
             var weightMatrix = this.weightMatrices[i];
 
-            var input = weightMatrix.multiply(true, this.bias ? outputs[i].unshift(1) : outputs[i]);
-
+            var input = weightMatrix.multiply(true, outputs[i]);
             inputs.push(input);
 
-            var output = inputs[i + 1].callback(this.constructor.activationFunctionSigmoid);
-
+            var output = inputs[i + 1].callback(true, this.constructor.activationFunctionSigmoid);
             outputs.push(output);
+
+            if (this.bias && i + 1 < this.planes.length) {
+                outputs[outputs.length - 1].unshift(1)
+            }
         }
 
         return {
@@ -126,6 +133,8 @@ class NeuronalNetwork {
      * @param expectedVector
      */
     backPropagation(forwardPropagation, expectedVector) {
+
+        /* delta from the output layer */
         var deltaOutput = forwardPropagation.outputs[2].
             callback(true, this.constructor.derivationFunctionSigmoidCalculated).
             rowMultiply(
@@ -136,7 +145,7 @@ class NeuronalNetwork {
                 ])
             );
 
-        console.log(JSON.stringify(deltaOutput.array));
+        //var deltaHidden =
 
         return {
             deltaOutput: deltaOutput
