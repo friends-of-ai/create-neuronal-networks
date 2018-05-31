@@ -136,26 +136,32 @@ class NeuronalNetwork {
 
         var delta = [];
 
-        /* delta from the output layer */
-        delta.push(
-            forwardPropagation.outputs[2].
-            callback(true, this.constructor.derivationFunctionSigmoidCalculated).
-            rowMultiply(
-                true,
-                new Vector([
-                    expectedVector.array[0] - forwardPropagation.outputs[2].array[0],
-                    expectedVector.array[1] - forwardPropagation.outputs[2].array[1]
-                ])
-            )
-        );
+        for (var i = 0; i < this.planes.length; i++) {
+            if (i === 0) {
+                var vector = new Vector([
+                    expectedVector.array[0] - forwardPropagation.outputs[forwardPropagation.outputs.length - 1 - i].array[0],
+                    expectedVector.array[1] - forwardPropagation.outputs[forwardPropagation.outputs.length - 1 - i].array[1]
+                ]);
 
-        var weightMatrix = forwardPropagation.weightMatrices[1].shiftCol(true).transpose();
+                var output = forwardPropagation.outputs[forwardPropagation.outputs.length - 1 - i];
+            } else {
+                var weightMatrix = forwardPropagation.weightMatrices[forwardPropagation.weightMatrices.length - i].shiftCol(true).transpose();
+                var vector = weightMatrix.multiply(true, delta[delta.length - 1]);
+                var output = forwardPropagation.outputs[forwardPropagation.outputs.length - 1 - i].shift(true);
+            }
 
-        delta.unshift(
-            forwardPropagation.outputs[1].shift(true).
-            callback(true, this.constructor.derivationFunctionSigmoidCalculated).
-            rowMultiply(true, weightMatrix.multiply(true, delta[delta.length - 1]))
-        );
+            /* delta from the output layer */
+            delta.unshift(
+                output.callback(true, this.constructor.derivationFunctionSigmoidCalculated).rowMultiply(true, vector)
+            );
+        }
+
+        var wDelta = [];
+
+        for (var i = 0; i < delta.length; i++) {
+            console.log(delta[delta.length - 1 - i]);
+            console.log(forwardPropagation.outputs[forwardPropagation.outputs.length - 2 - i].array);
+        }
 
         return {
             delta: delta
