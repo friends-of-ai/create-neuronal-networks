@@ -126,26 +126,21 @@ class NeuronalNetwork {
      * @param expectedVector
      */
     backPropagation(forwardPropagation, expectedVector) {
-        var dO1 = this.constructor.derivationFunctionSigmoidCalculated(this.constructor.activationFunctionSigmoid(forwardPropagation.inputs[2].array[0])) * (expectedVector.array[0] - forwardPropagation.outputs[2].array[0]);
-        var dO2 = this.constructor.derivationFunctionSigmoidCalculated(this.constructor.activationFunctionSigmoid(forwardPropagation.inputs[2].array[1])) * (expectedVector.array[1] - forwardPropagation.outputs[2].array[1]);
+        var deltaOutput = forwardPropagation.outputs[2].
+            callback(true, this.constructor.derivationFunctionSigmoidCalculated).
+            rowMultiply(
+                true,
+                new Vector([
+                    expectedVector.array[0] - forwardPropagation.outputs[2].array[0],
+                    expectedVector.array[1] - forwardPropagation.outputs[2].array[1]
+                ])
+            );
 
-        console.log(dO1);
-        console.log(dO2);
+        console.log(JSON.stringify(deltaOutput.array));
 
-        var dO1 = this.constructor.derivationFunctionSigmoidCalculated(forwardPropagation.outputs[2].array[0]) * (expectedVector.array[0] - forwardPropagation.outputs[2].array[0]);
-        var dO2 = this.constructor.derivationFunctionSigmoidCalculated(forwardPropagation.outputs[2].array[1]) * (expectedVector.array[1] - forwardPropagation.outputs[2].array[1]);
-
-        console.log(dO1);
-        console.log(dO2);
-
-        var d = forwardPropagation.outputs[2].callback(this.constructor.derivationFunctionSigmoidCalculated).rowMultiply(
-            new Vector([
-                expectedVector.array[0] - forwardPropagation.outputs[2].array[0],
-                expectedVector.array[1] - forwardPropagation.outputs[2].array[1]
-            ])
-        );
-
-        console.log(d.array);
+        return {
+            deltaOutput: deltaOutput
+        };
     }
 
     /**
