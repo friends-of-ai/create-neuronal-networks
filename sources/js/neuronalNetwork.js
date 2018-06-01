@@ -46,19 +46,9 @@ class NeuronalNetwork {
 
         var backPropagation = this.backPropagation(forwardPropagation, expectedVector);
 
-        console.log(backPropagation);
-
-        forwardPropagation.inputs.map(function(vector, index) {
-            console.log('input ' + index, JSON.stringify(vector.array));
-        });
-
-        forwardPropagation.outputs.map(function(vector, index) {
-            console.log('output ' + index, JSON.stringify(vector.array));
-        });
-
-        forwardPropagation.weightMatrices.map(function(matrix, index) {
-            console.log('weightMatrix ' + index, JSON.stringify(matrix.array));
-        });
+        for (var i = 0; i < backPropagation.weightMatrixDelta.length; i++) {
+            this.weightMatrices[i].add(backPropagation.weightMatrixDelta[i]);
+        }
 
         return forwardPropagation.weightMatrices;
     }
@@ -69,20 +59,22 @@ class NeuronalNetwork {
      * @param vector
      * @returns {Vector}
      */
-    calculateOutput(vector) {
+    calculateOutput(vector, show) {
         var forwardPropagation = this.forwardPropagation(vector);
 
-        forwardPropagation.inputs.map(function(vector, index) {
-            console.log('input ' + index, JSON.stringify(vector.array));
-        });
+        if (show) {
+            forwardPropagation.inputs.map(function (vector, index) {
+                console.log('input ' + index, JSON.stringify(vector.array));
+            });
 
-        forwardPropagation.outputs.map(function(vector, index) {
-            console.log('output ' + index, JSON.stringify(vector.array));
-        });
+            forwardPropagation.outputs.map(function (vector, index) {
+                console.log('output ' + index, JSON.stringify(vector.array));
+            });
 
-        forwardPropagation.weightMatrices.map(function(matrix, index) {
-            console.log('weightMatrix ' + index, JSON.stringify(matrix.array));
-        });
+            forwardPropagation.weightMatrices.map(function (matrix, index) {
+                console.log('weightMatrix ' + index, JSON.stringify(matrix.array));
+            });
+        }
 
         return forwardPropagation.outputs[forwardPropagation.outputs.length - 1];
     }
