@@ -114,4 +114,33 @@ function startNeuronalNetworkTest() {
             );
         }
     );
+
+    /* NN: test the learn method */
+    new Test(
+        NeuronalNetwork.SUCCESS_LEARN_TEST,
+        function () {
+            var planes = [2, 2, 2];
+
+            var neuronalNetwork = new NeuronalNetwork(planes, true);
+
+            var input    = new Vector([0.7, 0.6]);
+            var expected = new Vector([0.9, 0.2]);
+
+            /* train the network */
+            for (var i = 0; i < 100; i++) {
+                neuronalNetwork.train(input, expected);
+            }
+
+            /* test the network (the output should be the expected value */
+            var output = neuronalNetwork.calculateOutput(input);
+
+            return (
+                Test.equalArray(neuronalNetwork.planes, [2, 2, 2]) &&
+                Test.equalObjectInstance(output, Vector) &&
+                Test.equalInteger(output.size, 2) &&
+                Math.round(output.getCell(0) * 10) / 10 === expected.getCell(0) &&
+                Math.round(output.getCell(1) * 10) / 10 === expected.getCell(1)
+            );
+        }
+    );
 }

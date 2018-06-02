@@ -42,6 +42,10 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
         return [this, 204, 'Init neuronal network with weight matrices and bias.'];
     }
 
+    static get SUCCESS_LEARN_TEST() {
+        return [this, 205, 'Test the learn method.'];
+    }
+
     static get CLASS_NAME() {
         return 'NeuronalNetwork';
     }
@@ -192,7 +196,7 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
             outputs[outputs.length - 1].unshift(1)
         }
 
-        for (var i = 0; i < this.planes.length; i++) {
+        for (var i = 0; i < this.weightMatrices.length; i++) {
             var weightMatrix = this.weightMatrices[i];
 
             var input = weightMatrix.multiply(true, outputs[i]);
@@ -201,7 +205,7 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
             var output = inputs[i + 1].callback(true, this.constructor.activationFunctionSigmoid);
             outputs.push(output);
 
-            if (this.bias && i + 1 < this.planes.length) {
+            if (this.bias && i + 1 < this.weightMatrices.length) {
                 outputs[outputs.length - 1].unshift(1)
             }
         }
@@ -223,7 +227,7 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
 
         /* calculate the delta's */
         var delta = [];
-        for (var i = 0; i < this.planes.length; i++) {
+        for (var i = 0; i < this.weightMatrices.length; i++) {
             if (i === 0) {
                 var vector = new Vector([
                     expectedVector.array[0] - forwardPropagation.outputs[forwardPropagation.outputs.length - 1 - i].array[0],

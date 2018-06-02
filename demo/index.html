@@ -27,23 +27,20 @@
 
         var planes = [2, 2, 2];
 
-        var neuronalNetwork = new NeuronalNetwork(planes);
+        var neuronalNetwork = new NeuronalNetwork(planes, true);
 
-        console.log(JSON.stringify(neuronalNetwork.weightMatrixArray));
-        console.log(JSON.stringify(neuronalNetwork.planes));
+        var input    = new Vector([0.7, 0.6]);
+        var expected = new Vector([0.9, 0.2]);
 
-        // var input    = new Vector([0.7, 0.6]);
-        // var expected = new Vector([0.9, 0.2]);
-        //
-        // var output = neuronalNetwork.calculateOutput(input);
-        // console.log(JSON.stringify(output.array));
-        //
-        // for (var i = 0; i < 100; i++) {
-        //     neuronalNetwork.train(input, expected);
-        // }
-        //
-        // var output = neuronalNetwork.calculateOutput(input, true);
-        // console.log(JSON.stringify(output.array));
+        var output = neuronalNetwork.calculateOutput(input);
+        console.log(JSON.stringify(output.array));
+
+        for (var i = 0; i < 100; i++) {
+            neuronalNetwork.train(input, expected);
+        }
+
+        var output = neuronalNetwork.calculateOutput(input);
+        console.log(JSON.stringify(output.array));
 
         //weightMatrix 0 [[0.49780517318759615,0.9384636212313185,0.6186831039125569],[-0.2524339263095204,-0.6367037484166632,0.668539644214286]]
         //weightMatrix 1 [[1.0411521616164443,1.066592253188244,0.656738609311879],[-0.7444001398255222,-1.0613387662299698,0.5393075256542736]]
