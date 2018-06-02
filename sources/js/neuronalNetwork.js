@@ -4,34 +4,117 @@
  * @author  Björn Hempel <bjoern@hempel.li>
  * @version 1.0 (2018-05-21)
  */
-class NeuronalNetwork {
+class NeuronalNetwork extends BaseNeuronalNetwork {
+
+    static get ERROR_GIVEN_PARAMETER_IS_NO_ARRAY() {
+        return [this, 101, 'Given parameter is not an array', 'The given parameter must be an instance of array.'];
+    }
+
+    static get ERROR_GIVEN_PARAMETER_IS_NO_MATRIX() {
+        return [this, 102, 'Given parameter is not a matrix', 'The given parameter must be an instance of matrix.'];
+    }
+
+    static get ERROR_ARRAY_MUST_BE_LONGER_THAN_ONE() {
+        return [this, 103, 'Array must be longer than one', 'The array must be longer than one.'];
+    }
+
+    static get ERROR_WEIGHT_MATRIX_WRONG_SIZE() {
+        return [this, 103, 'The current weight matrix does not fit to the last one', 'The current weight matrix does not fit to the last one.'];
+    }
+
+    static get ERROR_ELEMENT_IS_NO_NUMBER() {
+        return [this, 104, 'The given element is no number', 'The given element is no number.'];
+    }
+
+    static get SUCCESS_INITIALISE_NEURONAL_NETWORK_PLANES() {
+        return [this, 201, 'Init neuronal network with planes.'];
+    }
+
+    static get CLASS_NAME() {
+        return 'NeuronalNetwork';
+    }
+
     /**
      * The constructor of the NeuronalNetwork.
      */
     constructor(planes, bias) {
-        this.planes    = planes;
+        super();
+
         this.bias      = bias ? true : false;
         this.learnRate = 1;
+        this.name      = this.constructor.CLASS_NAME;
+
+        this.assert(planes instanceof Array, 'NeuronalNetwork.constructor', this.constructor.ERROR_GIVEN_PARAMETER_IS_NO_ARRAY);
+        this.assert(planes.length > 0, 'NeuronalNetwork.constructor', this.constructor.ERROR_ARRAY_MUST_BE_LONGER_THAN_ONE);
 
         this.weightMatrices = [];
 
-        // for (var i = 0; i < this.planes.length - 1; i++) {
-        //     var weightMatrix = [];
-        //
-        //     for (var j = 0; j < this.planes[i + 1]; j++) {
-        //         weightMatrix[j] = [];
-        //         for (var k = 0; k < this.planes[i]; k++) {
-        //             weightMatrix[j][k] = 1;
-        //         }
-        //     }
-        //
-        //     this.weightMatrices.push(new Matrix(weightMatrix));
-        // }
-        //this.weightMatrices.push(new Matrix([[0.9, 0.3, 0.4], [0.2, 0.8, 0.2], [0.1, 0.5, 0.6]]));
-        //this.weightMatrices.push(new Matrix([[0.3, 0.7, 0.5], [0.6, 0.5, 0.2], [0.8, 0.1, 0.9]]));
+        /* matrix array given */
+        if (planes[0] instanceof Matrix) {
+            this.saveWeightMatrices(planes);
+        } else {
+            this.buildWeightMatrices(planes);
+        }
+    }
 
-        this.weightMatrices.push(new Matrix([[0.3, 0.8, 0.5], [-0.2, -0.6, 0.7]]));
-        this.weightMatrices.push(new Matrix([[0.2, 0.4, 0.3], [0.1, -0.4, 0.9]]));
+    /**
+     * Returns the current matrix.
+     *
+     * @returns {Array|*}
+     */
+    get weightMatrixArray() {
+        return this.weightMatrices.map(function (matrix) { return matrix.array; });
+    }
+
+    /**
+     * Calculate the weight matrices.
+     *
+     * @param planes
+     */
+    buildWeightMatrices(planes) {
+        this.planes = planes;
+
+        for (var i = 0; i < this.planes.length - 1; i++) {
+            this.assert(this.isNumber(this.planes[i]), 'NeuronalNetwork.buildWeightMatrices', this.constructor.ERROR_ELEMENT_IS_NO_NUMBER);
+
+            var weightMatrix = [];
+
+            for (var j = 0; j < this.planes[i + 1]; j++) {
+                weightMatrix[j] = [];
+                for (var k = 0; k < this.planes[i] + (this.bias ? 1 : 0); k++) {
+                    weightMatrix[j][k] = this.getRandomNumber();
+                }
+            }
+
+            this.weightMatrices.push(new Matrix(weightMatrix));
+        }
+    }
+
+    /**
+     * Saves the given weight matrices to this object.
+     *
+     * @param weightMatrices
+     */
+    saveWeightMatrices(weightMatrices) {
+        this.planes = [];
+
+        this.planes.push(weightMatrices[0].cols - (this.bias ? 1 : 0));
+
+        weightMatrices.map(function(weightMatrix) {
+            this.assert(weightMatrix instanceof Matrix, 'NeuronalNetwork.saveWeightMatrices', this.constructor.ERROR_GIVEN_PARAMETER_IS_NO_MATRIX);
+
+            if (this.weightMatrices.length > 0) {
+                this.assert(
+                    (this.weightMatrices[this.weightMatrices.length - 1].rows + (this.bias ? 1 : 0)) === weightMatrix.cols,
+                    'NeuronalNetwork.saveWeightMatrices',
+                    this.constructor.ERROR_WEIGHT_MATRIX_WRONG_SIZE
+                );
+            }
+
+            this.weightMatrices.push(new Matrix(weightMatrix.array));
+
+            this.planes.push(this.weightMatrices[this.weightMatrices.length - 1].rows);
+        }.bind(this));
     }
 
     /**
@@ -158,6 +241,15 @@ class NeuronalNetwork {
             delta: delta,
             weightMatrixDelta: weightMatrixDelta
         };
+    }
+
+    /**
+     * Calculates a random number depending on the plane level.
+     *
+     * @returns {number}
+     */
+    getRandomNumber() {
+        return Math.random() / 2;
     }
 
     /**
