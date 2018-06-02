@@ -30,6 +30,10 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
         return [this, 201, 'Init neuronal network with planes.'];
     }
 
+    static get SUCCESS_INITIALISE_NEURONAL_NETWORK_PLANES_BIAS() {
+        return [this, 202, 'Init neuronal network with planes and bias.'];
+    }
+
     static get CLASS_NAME() {
         return 'NeuronalNetwork';
     }
