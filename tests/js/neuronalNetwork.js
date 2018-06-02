@@ -138,8 +138,8 @@ function startNeuronalNetworkTest() {
                 Test.equalArray(neuronalNetwork.planes, [2, 2, 2]) &&
                 Test.equalObjectInstance(output, Vector) &&
                 Test.equalInteger(output.size, 2) &&
-                Math.round(output.getCell(0) * 10) / 10 === expected.getCell(0) &&
-                Math.round(output.getCell(1) * 10) / 10 === expected.getCell(1)
+                Test.equalNumber(output.getCell(0), expected.getCell(0), 1) &&
+                Test.equalNumber(output.getCell(1), expected.getCell(1), 1)
             );
         }
     );
