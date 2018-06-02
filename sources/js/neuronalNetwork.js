@@ -34,6 +34,14 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
         return [this, 202, 'Init neuronal network with planes and bias.'];
     }
 
+    static get SUCCESS_INITIALISE_NEURONAL_NETWORK_WEIGHT_MATRICES() {
+        return [this, 203, 'Init neuronal network with weight matrices.'];
+    }
+
+    static get SUCCESS_INITIALISE_NEURONAL_NETWORK_WEIGHT_MATRICES_BIAS() {
+        return [this, 204, 'Init neuronal network with weight matrices and bias.'];
+    }
+
     static get CLASS_NAME() {
         return 'NeuronalNetwork';
     }
