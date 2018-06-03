@@ -33,7 +33,8 @@ var neuronalNetwork = new NeuronalNetwork(weightMatrices);
 var input  = new Vector([0.9, 0.1, 0.8]);
 var output = neuronalNetwork.calculateOutput(input);
 
-console.log(JSON.stringify(output.array)); // prints [0.7263033450139793,0.7085980724248232,0.778097059561142]
+console.log(JSON.stringify(output.array));
+// prints [0.7263033450139793,0.7085980724248232,0.778097059561142]
 ```
 
 #### 1.3.2 Let the neuronal network calculate the weight matrices
@@ -46,7 +47,8 @@ var neuronalNetwork = new NeuronalNetwork(planes);
 var input  = new Vector([0.9, 0.1, 0.8]);
 var output = neuronalNetwork.calculateOutput(input);
 
-console.log(JSON.stringify(output.array)); // prints (example) [0.5601474395121488,0.6247316906773285,0.6346952211353676]
+console.log(JSON.stringify(output.array));
+// prints (example) [0.5601474395121488,0.6247316906773285,0.6346952211353676]
 ```
 
 #### 1.3.3 Train the network
@@ -67,13 +69,43 @@ for (var i = 0; i < 100; i++) {
 /* test the network (the output should be the expected value */
 var output = neuronalNetwork.calculateOutput(input);
 
-console.log(Math.round(output.array[0] * 10) / 10, Math.round(output.array[1] * 10) / 10); // prints 0.9 0.2
-```
-            
+console.log(Math.round(output.array[0] * 10) / 10, Math.round(output.array[1] * 10) / 10);
+// prints 0.9 0.2
+```       
 
 ## 2. Test the libraries
 
-Coming soon..
+### 2.1 Neuronal vector library
+
+Call `tests/neuronalNetwork.html` in your browser. It adds a div element with id testResult to your body and returns for example something like this:
+
+```text
+-------------------------------------
+Start test "Neuronal Network - Tests"
+-------------------------------------
+ 
+  1) NeuronalNetwork: Running error test "Given parameter is not an array" (Code: 101).
+     Test succeeded (0.3 ms).
+  2) NeuronalNetwork: Running error test "Array must be longer than one" (Code: 103).
+     Test succeeded (0.1 ms).
+  3) NeuronalNetwork: Running error test "The given element is no number" (Code: 104).
+     Test succeeded (0.2 ms).
+  4) NeuronalNetwork: Running success test "Init neuronal network with planes." (Code: 201).
+     Test succeeded (1 ms).
+  5) NeuronalNetwork: Running success test "Init neuronal network with planes and bias." (Code: 202).
+     Test succeeded (0 ms).
+  6) NeuronalNetwork: Running success test "Init neuronal network with weight matrices." (Code: 203).
+     Test succeeded (0.5 ms).
+  7) NeuronalNetwork: Running success test "Init neuronal network with weight matrices and bias." (Code: 204).
+     Test succeeded (0.2 ms).
+  8) NeuronalNetwork: Running success test "Test the learn method." (Code: 205).
+     Test succeeded (42.6 ms).
+ 
+---------------------------------------------------------------
+RESULT
+-> All test succeeded (46.8 ms) [success: 8; error: 0; all: 8].
+---------------------------------------------------------------
+```
 
 ## A. Other Tutorials
 
