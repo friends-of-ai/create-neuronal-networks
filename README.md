@@ -51,7 +51,7 @@ console.log(JSON.stringify(output.array));
 // prints (example) [0.5601474395121488,0.6247316906773285,0.6346952211353676]
 ```
 
-#### 1.3.3 Train the network
+#### 1.3.3 Train and test the network
 
 ```javascript
 var planes = [2, 2, 2];
