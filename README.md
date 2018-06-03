@@ -20,7 +20,7 @@ Coming soon..
 
 ### 1.3 The network (neuronal network)
 
-#### 1.3.1 With given weight matrices
+#### 1.3.1 Create a neuronal network with given weight matrices
 
 ```javascript
 var weightMatrices =  [
