@@ -229,11 +229,7 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
         var delta = [];
         for (var i = 0; i < this.weightMatrices.length; i++) {
             if (i === 0) {
-                var vector = new Vector([
-                    expectedVector.array[0] - forwardPropagation.outputs[forwardPropagation.outputs.length - 1 - i].array[0],
-                    expectedVector.array[1] - forwardPropagation.outputs[forwardPropagation.outputs.length - 1 - i].array[1]
-                ]);
-
+                var vector = expectedVector.subtract(true, forwardPropagation.outputs[forwardPropagation.outputs.length - 1 - i]);
                 var output = forwardPropagation.outputs[forwardPropagation.outputs.length - 1 - i];
             } else {
                 var weightMatrix = forwardPropagation.weightMatrices[forwardPropagation.weightMatrices.length - i].shiftCol(true).transpose();
