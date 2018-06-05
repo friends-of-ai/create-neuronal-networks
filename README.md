@@ -85,25 +85,33 @@ Start test "Neuronal Network - Tests"
 -------------------------------------
  
   1) NeuronalNetwork: Running error test "Given parameter is not an array" (Code: 101).
-     Test succeeded (0.3 ms).
-  2) NeuronalNetwork: Running error test "Array must be longer than one" (Code: 103).
-     Test succeeded (0.1 ms).
-  3) NeuronalNetwork: Running error test "The given element is no number" (Code: 104).
-     Test succeeded (0.2 ms).
-  4) NeuronalNetwork: Running success test "Init neuronal network with planes." (Code: 201).
-     Test succeeded (1 ms).
-  5) NeuronalNetwork: Running success test "Init neuronal network with planes and bias." (Code: 202).
-     Test succeeded (0 ms).
-  6) NeuronalNetwork: Running success test "Init neuronal network with weight matrices." (Code: 203).
      Test succeeded (0.5 ms).
-  7) NeuronalNetwork: Running success test "Init neuronal network with weight matrices and bias." (Code: 204).
+  2) NeuronalNetwork: Running error test "Array must be longer than one" (Code: 103).
      Test succeeded (0.2 ms).
-  8) NeuronalNetwork: Running success test "Test the learn method." (Code: 205).
-     Test succeeded (42.6 ms).
+  3) NeuronalNetwork: Running error test "The given element is no number" (Code: 104).
+     Test succeeded (0.3 ms).
+  4) NeuronalNetwork: Running success test "Init neuronal network with planes." (Code: 201).
+     Test succeeded (0.8 ms).
+  5) NeuronalNetwork: Running success test "Init neuronal network with planes and bias." (Code: 202).
+     Test succeeded (0.1 ms).
+  6) NeuronalNetwork: Running success test "Init neuronal network with weight matrices." (Code: 203).
+     Test succeeded (0.3 ms).
+  7) NeuronalNetwork: Running success test "Init neuronal network with weight matrices and bias." (Code: 204).
+     Test succeeded (0.3 ms).
+  8) NeuronalNetwork: Running error test "The current vector does not fit as input value" (Code: 103).
+     Test succeeded (0.4 ms).
+  9) NeuronalNetwork: Running success test "Calculation test." (Code: 205).
+     Test succeeded (1.3 ms).
+ 10) NeuronalNetwork: Running error test "The current vector does not fit as input value" (Code: 103).
+     Test succeeded (0.3 ms).
+ 11) NeuronalNetwork: Running success test "Calculation test with bias." (Code: 206).
+     Test succeeded (0.6 ms).
+ 12) NeuronalNetwork: Running success test "Test the learn method." (Code: 207).
+     Test succeeded (38 ms).
  
 ---------------------------------------------------------------
 RESULT
--> All test succeeded (46.8 ms) [success: 8; error: 0; all: 8].
+-> All test succeeded (46 ms) [success: 12; error: 0; all: 12].
 ---------------------------------------------------------------
 ```
 
