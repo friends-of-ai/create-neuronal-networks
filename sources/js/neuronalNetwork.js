@@ -22,6 +22,10 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
         return [this, 103, 'The current weight matrix does not fit to the last one', 'The current weight matrix does not fit to the last one.'];
     }
 
+    static get ERROR_WEIGHT_VECTOR_WRONG_SIZE() {
+        return [this, 103, 'The current vector does not fit as input value', 'The current vector does not fit as input value.'];
+    }
+
     static get ERROR_ELEMENT_IS_NO_NUMBER() {
         return [this, 104, 'The given element is no number', 'The given element is no number.'];
     }
@@ -167,6 +171,8 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
      * @returns {Vector}
      */
     calculateOutput(vector, show) {
+        this.assert(this.planes[0] === vector.size, 'NeuronalNetwork.calculateOutput', this.constructor.ERROR_WEIGHT_VECTOR_WRONG_SIZE);
+
         var forwardPropagation = this.forwardPropagation(vector);
 
         if (show) {

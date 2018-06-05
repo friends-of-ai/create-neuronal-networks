@@ -117,6 +117,23 @@ function startNeuronalNetworkTest() {
 
     /* NN: calculation test (without bias) */
     new Test(
+        NeuronalNetwork.ERROR_WEIGHT_VECTOR_WRONG_SIZE,
+        function () {
+            var weightMatrices1 =  [
+                new Matrix([[0.9, 0.3, 0.4], [0.2, 0.8, 0.2], [0.1, 0.5, 0.6]]),
+                new Matrix([[0.3, 0.7, 0.5], [0.6, 0.5, 0.2], [0.8, 0.1, 0.9]])
+            ];
+
+            var neuronalNetwork = new NeuronalNetwork(weightMatrices1);
+
+            neuronalNetwork.calculateOutput(new Vector([0.9, 0.1, 0.8, 0.7]));
+
+            return false;
+        }
+    );
+
+    /* NN: calculation test (without bias) */
+    new Test(
         NeuronalNetwork.SUCCESS_CALCULATION,
         function () {
             var weightMatrices1 =  [
