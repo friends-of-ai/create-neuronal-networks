@@ -170,24 +170,10 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
      * @param vector
      * @returns {Vector}
      */
-    calculateOutput(vector, show) {
+    calculateOutput(vector) {
         this.assert(this.planes[0] === vector.size, 'NeuronalNetwork.calculateOutput', this.constructor.ERROR_WEIGHT_VECTOR_WRONG_SIZE);
 
         var forwardPropagation = this.forwardPropagation(vector);
-
-        if (show) {
-            forwardPropagation.inputs.map(function (vector, index) {
-                console.log('input ' + index, JSON.stringify(vector.array));
-            });
-
-            forwardPropagation.outputs.map(function (vector, index) {
-                console.log('output ' + index, JSON.stringify(vector.array));
-            });
-
-            forwardPropagation.weightMatrices.map(function (matrix, index) {
-                console.log('weightMatrix ' + index, JSON.stringify(matrix.array));
-            });
-        }
 
         return forwardPropagation.outputs[forwardPropagation.outputs.length - 1];
     }
@@ -251,7 +237,7 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
                 var output = forwardPropagation.outputs[forwardPropagation.outputs.length - 1 - i].shift(true);
             }
 
-            /* delta from the output layer */
+            /* add delta from the output layer to the beginning of delta array */
             delta.unshift(
                 output.callback(true, this.constructor.derivationFunctionSigmoidCalculated).rowMultiply(true, vector)
             );
