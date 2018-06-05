@@ -237,7 +237,13 @@ function startNeuronalNetworkTest() {
                 trainResult.backPropagation.delta[0] instanceof Vector &&
                 Test.equalArray(trainResult.backPropagation.delta[0].array, [0.010327319586985247, -0.015177688822320668]) &&
                 trainResult.backPropagation.delta[1] instanceof Vector &&
-                Test.equalArray(trainResult.backPropagation.delta[1].array, [0.05546678896794252, -0.08662213991620578])
+                Test.equalArray(trainResult.backPropagation.delta[1].array, [0.05546678896794252, -0.08662213991620578]) &&
+                trainResult.backPropagation.weightMatrixDelta instanceof Array &&
+                trainResult.backPropagation.weightMatrixDelta.length == 2 &&
+                trainResult.backPropagation.weightMatrixDelta[0] instanceof Matrix &&
+                Test.equalArray(trainResult.backPropagation.weightMatrixDelta[0].array, [[0.010327319586985247, 0.007229123710889672, 0.006196391752191148], [-0.015177688822320668, -0.010624382175624466, -0.0091066132933924]]) &&
+                trainResult.backPropagation.weightMatrixDelta[1] instanceof Matrix &&
+                Test.equalArray(trainResult.backPropagation.weightMatrixDelta[1].array, [[0.05546678896794252, 0.042228681028582474, 0.024969262671611037], [-0.08662213991620578, -0.06594826894790738, -0.03899434247031761]])
             );
         }
     );
