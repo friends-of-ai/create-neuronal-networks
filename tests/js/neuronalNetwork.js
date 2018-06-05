@@ -206,6 +206,42 @@ function startNeuronalNetworkTest() {
         }
     );
 
+    /* NN: calculation test (with bias) */
+    new Test(
+        NeuronalNetwork.SUCCESS_BACKWARD_PROPAGATION_BIAS,
+        function () {
+            var weightMatrices = [
+                new Matrix([[0.3, 0.8, 0.5], [-0.2, -0.6, 0.7]]),
+                new Matrix([[0.2, 0.4, 0.3], [0.1, -0.4, 0.9]])
+            ];
+
+            var neuronalNetwork = new NeuronalNetwork(weightMatrices, true);
+
+            var input    = new Vector([0.7, 0.6]);
+            var expected = new Vector([0.9, 0.2]);
+
+            var trainResult = neuronalNetwork.train(input, expected);
+
+            return (
+                Test.equalArray(neuronalNetwork.planes, [2, 2, 2]) &&
+                neuronalNetwork.weightMatrices instanceof Array &&
+                neuronalNetwork.weightMatrices.length === 2 &&
+                neuronalNetwork.weightMatrices[0] instanceof Matrix &&
+                Test.equalArray(neuronalNetwork.weightMatrices[0].array, [[0.31032731958698523, 0.8072291237108897, 0.5061963917521911], [-0.2151776888223207, -0.6106243821756244, 0.6908933867066076]]) &&
+                Test.equalArray(neuronalNetwork.weightMatrices[0].size, [2, 3]) &&
+                neuronalNetwork.weightMatrices[1] instanceof Matrix &&
+                Test.equalArray(neuronalNetwork.weightMatrices[1].array, [[0.2554667889679425, 0.4422286810285825, 0.324969262671611], [0.013377860083794227, -0.4659482689479074, 0.8610056575296824]]) &&
+                Test.equalArray(neuronalNetwork.weightMatrices[1].size, [2, 3]) &&
+                trainResult.backPropagation.delta instanceof Array &&
+                trainResult.backPropagation.delta.length == 2 &&
+                trainResult.backPropagation.delta[0] instanceof Vector &&
+                Test.equalArray(trainResult.backPropagation.delta[0].array, [0.010327319586985247, -0.015177688822320668]) &&
+                trainResult.backPropagation.delta[1] instanceof Vector &&
+                Test.equalArray(trainResult.backPropagation.delta[1].array, [0.05546678896794252, -0.08662213991620578])
+            );
+        }
+    );
+
     /* NN: test the learn method */
     new Test(
         NeuronalNetwork.SUCCESS_LEARN_TEST,

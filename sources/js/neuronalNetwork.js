@@ -47,15 +47,23 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
     }
 
     static get SUCCESS_CALCULATION() {
-        return [this, 205, 'Calculation test.'];
+        return [this, 205, 'Calculation test (forward propagation).'];
     }
 
     static get SUCCESS_CALCULATION_BIAS() {
-        return [this, 206, 'Calculation test with bias.'];
+        return [this, 206, 'Calculation test with bias (forward propagation).'];
+    }
+
+    static get SUCCESS_BACKWARD_PROPAGATION() {
+        return [this, 207, 'Backward propagation test.'];
+    }
+
+    static get SUCCESS_BACKWARD_PROPAGATION_BIAS() {
+        return [this, 208, 'Backward propagation test with bias (forward propagation).'];
     }
 
     static get SUCCESS_LEARN_TEST() {
-        return [this, 207, 'Test the learn method.'];
+        return [this, 209, 'Test the learn method.'];
     }
 
     static get CLASS_NAME() {
@@ -150,18 +158,21 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
      *
      * @param {Vector} inputVector
      * @param {Vector} expectedVector
-     * @return {Array}
+     * @return {Object}
      */
     train(inputVector, expectedVector) {
-        var forwardPropagation = this.forwardPropagation(inputVector);
+        var forwardPropagation = this.doForwardPropagation(inputVector);
 
-        var backPropagation = this.backPropagation(forwardPropagation, expectedVector);
+        var backPropagation = this.doBackPropagation(forwardPropagation, expectedVector);
 
         for (var i = 0; i < backPropagation.weightMatrixDelta.length; i++) {
             this.weightMatrices[i].add(backPropagation.weightMatrixDelta[i]);
         }
 
-        return forwardPropagation.weightMatrices;
+        return {
+            forwardPropagation: forwardPropagation,
+            backPropagation: backPropagation
+        };
     }
 
     /**
@@ -173,7 +184,7 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
     calculateOutput(vector) {
         this.assert(this.planes[0] === vector.size, 'NeuronalNetwork.calculateOutput', this.constructor.ERROR_WEIGHT_VECTOR_WRONG_SIZE);
 
-        var forwardPropagation = this.forwardPropagation(vector);
+        var forwardPropagation = this.doForwardPropagation(vector);
 
         return forwardPropagation.outputs[forwardPropagation.outputs.length - 1];
     }
@@ -184,7 +195,7 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
      * @param {Vector} vector
      * @return {Object}
      */
-    forwardPropagation(vector) {
+    doForwardPropagation(vector) {
         var inputs  = [];
         var outputs = [];
 
@@ -223,7 +234,7 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
      * @param forwardPropagation
      * @param expectedVector
      */
-    backPropagation(forwardPropagation, expectedVector) {
+    doBackPropagation(forwardPropagation, expectedVector) {
 
         /* calculate the delta's */
         var delta = [];
