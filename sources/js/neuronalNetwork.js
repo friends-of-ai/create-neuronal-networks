@@ -42,8 +42,16 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
         return [this, 204, 'Init neuronal network with weight matrices and bias.'];
     }
 
+    static get SUCCESS_CALCULATION() {
+        return [this, 205, 'Calculation test.'];
+    }
+
+    static get SUCCESS_CALCULATION_BIAS() {
+        return [this, 206, 'Calculation test with bias.'];
+    }
+
     static get SUCCESS_LEARN_TEST() {
-        return [this, 205, 'Test the learn method.'];
+        return [this, 207, 'Test the learn method.'];
     }
 
     static get CLASS_NAME() {
@@ -261,7 +269,7 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
      * @returns {number}
      */
     getRandomNumber() {
-        return Math.random() / 2;
+        return Math.random() / 3;
     }
 
     /**
