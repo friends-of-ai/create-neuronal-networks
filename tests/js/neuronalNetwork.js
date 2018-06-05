@@ -115,6 +115,34 @@ function startNeuronalNetworkTest() {
         }
     );
 
+    /* NN: calculation test (without bias) */
+    new Test(
+        NeuronalNetwork.SUCCESS_CALCULATION,
+        function () {
+            var weightMatrices1 =  [
+                new Matrix([[0.9, 0.3, 0.4], [0.2, 0.8, 0.2], [0.1, 0.5, 0.6]]),
+                new Matrix([[0.3, 0.7, 0.5], [0.6, 0.5, 0.2], [0.8, 0.1, 0.9]])
+            ];
+
+            var neuronalNetwork = new NeuronalNetwork(weightMatrices1);
+
+            var output = neuronalNetwork.calculateOutput(new Vector([0.9, 0.1, 0.8]));
+
+            return (
+                Test.equalArray(neuronalNetwork.planes, [3, 3, 3]) &&
+                neuronalNetwork.weightMatrices instanceof Array &&
+                neuronalNetwork.weightMatrices.length === 2 &&
+                neuronalNetwork.weightMatrices[0] instanceof Matrix &&
+                Test.equalArray(neuronalNetwork.weightMatrices[0].size, [3, 3]) &&
+                neuronalNetwork.weightMatrices[1] instanceof Matrix &&
+                Test.equalArray(neuronalNetwork.weightMatrices[1].size, [3, 3]) &&
+                Test.equalNumber(output.getCell(0), 0.7263033450139793, 6) &&
+                Test.equalNumber(output.getCell(1), 0.7085980724248232, 6) &&
+                Test.equalNumber(output.getCell(2), 0.778097059561142, 6)
+            );
+        }
+    );
+
     /* NN: calculation test (with bias) */
     new Test(
         NeuronalNetwork.SUCCESS_CALCULATION_BIAS,
