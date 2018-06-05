@@ -160,6 +160,23 @@ function startNeuronalNetworkTest() {
         }
     );
 
+    /* NN: calculation test (without bias) */
+    new Test(
+        NeuronalNetwork.ERROR_WEIGHT_VECTOR_WRONG_SIZE,
+        function () {
+            var weightMatrices = [
+                new Matrix([[0.3, 0.8, 0.5], [-0.2, -0.6, 0.7]]),
+                new Matrix([[0.2, 0.4, 0.3], [0.1, -0.4, 0.9]])
+            ];
+
+            var neuronalNetwork = new NeuronalNetwork(weightMatrices, true);
+
+            neuronalNetwork.calculateOutput(new Vector([0.7]));
+
+            return false;
+        }
+    );
+
     /* NN: calculation test (with bias) */
     new Test(
         NeuronalNetwork.SUCCESS_CALCULATION_BIAS,
