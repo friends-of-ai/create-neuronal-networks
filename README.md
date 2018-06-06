@@ -2,9 +2,9 @@
 
 This framework creates some neuronal networks. It shows and provides you a collection of algorithms how to use the framework.
 
-## 0. Introduction
+## 0. Preparations
 
-This framework uses needs two external git repositories:
+This framework needs two external git repositories:
 
 * [js-analysis](https://github.com/bjoern-hempel/js-analysis)
 * [js-testing-framework](https://github.com/bjoern-hempel/js-testing-framework)
