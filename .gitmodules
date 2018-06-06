@@ -1,0 +1,6 @@
+[submodule "vendor/js-testing-framework"]
+	path = vendor/js-testing-framework
+	url = git@github.com:bjoern-hempel/js-testing-framework.git
+[submodule "vendor/js-analysis"]
+	path = vendor/js-analysis
+	url = git@github.com:bjoern-hempel/js-analysis.git
