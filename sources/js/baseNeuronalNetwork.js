@@ -32,7 +32,7 @@ class BaseNeuronalNetwork {
 
             switch (this.name) {
                 case 'NeuronalNetwork':
-                    throw new NeuronalNetworkException(
+                    throw new JsTestException(
                         errorType[1],
                         String('%functionName: %errorText').replace(/%functionName/, functionName).replace(/%errorText/, errorText)
                     );

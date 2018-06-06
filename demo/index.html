@@ -3,47 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <title>Neuronal Network - Demo</title>
+
+    <script src="../vendor/js-testing-framework/sources/js/jsTestException.js"></script>
+    <script src="../vendor/js-testing-framework/sources/js/jsTest.js"></script>
+
     <script src="../vendor/js-analysis/sources/js/base.js"></script>
-    <script src="../vendor/js-analysis/sources/js/vectorException.js"></script>
     <script src="../vendor/js-analysis/sources/js/vector.js"></script>
-    <script src="../vendor/js-analysis/sources/js/matrixException.js"></script>
     <script src="../vendor/js-analysis/sources/js/matrix.js"></script>
+
     <script src="../sources/js/baseNeuronalNetwork.js"></script>
-    <script src="../sources/js/neuronalNetworkException.js"></script>
     <script src="../sources/js/neuronalNetwork.js"></script>
+    <script src="../tests/js/neuronalNetwork.js"></script>
 </head>
 <body>
     <script>
 
-        var weightMatrices1 =  [
-            new Matrix([[0.9, 0.3, 0.4], [0.2, 0.8, 0.2], [0.1, 0.5, 0.6]]),
-            new Matrix([[0.3, 0.7, 0.5], [0.6, 0.5, 0.2], [0.8, 0.1, 0.9]])
-        ];
+        // var weightMatrices1 =  [
+        //     new Matrix([[0.9, 0.3, 0.4], [0.2, 0.8, 0.2], [0.1, 0.5, 0.6]]),
+        //     new Matrix([[0.3, 0.7, 0.5], [0.6, 0.5, 0.2], [0.8, 0.1, 0.9]])
+        // ];
+        //
+        // var neuronalNetwork = new NeuronalNetwork(weightMatrices1);
+        //
+        // neuronalNetwork.calculateOutput(new Vector([0.9, 0.1, 0.8, 0.7]));
+        //
+        // var weightMatrices1 =  [
+        //     new Matrix([[0.9, 0.3, 0.4], [0.2, 0.8, 0.2], [0.1, 0.5, 0.6]]),
+        //     new Matrix([[0.3, 0.7, 0.5], [0.6, 0.5, 0.2], [0.8, 0.1, 0.9]])
+        // ];
+        //
+        // var neuronalNetwork = new NeuronalNetwork(weightMatrices1);
+        //
+        // var output = neuronalNetwork.calculateOutput(new Vector([0.9, 0.1, 0.8]));
+        //
+        // console.log(JSON.stringify(output.array));
 
+
+
+
+        // var weightMatrices1 =  [
+        //     new Matrix([[0.9, 0.3, 0.4], [0.2, 0.8, 0.2], [0.1, 0.5, 0.6]]),
+        //     new Matrix([[0.3, 0.7, 0.5], [0.6, 0.5, 0.2], [0.8, 0.1, 0.9]])
+        // ];
+        //
         var weightMatrices2 = [
             new Matrix([[0.3, 0.8, 0.5], [-0.2, -0.6, 0.7]]),
             new Matrix([[0.2, 0.4, 0.3], [0.1, -0.4, 0.9]])
         ];
-
-        var planes = [2, 2, 2];
-
-        var neuronalNetwork = new NeuronalNetwork(planes, true);
+        //
+        // var planes = [2, 2, 2];
+        //
+        var neuronalNetwork = new NeuronalNetwork(weightMatrices2, true);
 
         var input    = new Vector([0.7, 0.6]);
         var expected = new Vector([0.9, 0.2]);
 
-        var output = neuronalNetwork.calculateOutput(input);
-        console.log(JSON.stringify(output.array));
+        var trainResult = neuronalNetwork.train(input, expected);
 
-        for (var i = 0; i < 100; i++) {
-            neuronalNetwork.train(input, expected);
-        }
+        console.log(trainResult, neuronalNetwork.weightMatrices);
 
-        var output = neuronalNetwork.calculateOutput(input);
-        console.log(JSON.stringify(output.array));
+        // var output = neuronalNetwork.calculateOutput(input);
+        // console.log(JSON.stringify(output.array));
+        //
+        // for (var i = 0; i < 100; i++) {
+        //     neuronalNetwork.train(input, expected);
+        // }
+        //
+        // var output = neuronalNetwork.calculateOutput(input);
+        // console.log(JSON.stringify(output.array));
 
         //weightMatrix 0 [[0.49780517318759615,0.9384636212313185,0.6186831039125569],[-0.2524339263095204,-0.6367037484166632,0.668539644214286]]
         //weightMatrix 1 [[1.0411521616164443,1.066592253188244,0.656738609311879],[-0.7444001398255222,-1.0613387662299698,0.5393075256542736]]
+
+
+
+
+        // var planes = [2, 2, 1];
+        // var neuronalNetwork = new NeuronalNetwork(planes, true);
+        //
+        // for (var i = 0; i < 1000; i++) {
+        //     neuronalNetwork.train(new Vector([0, 0]), new Vector([0]));
+        //     neuronalNetwork.train(new Vector([1, 0]), new Vector([1]));
+        //     neuronalNetwork.train(new Vector([0, 1]), new Vector([1]));
+        //     neuronalNetwork.train(new Vector([1, 1]), new Vector([0]));
+        // }
+        //
+        // console.log(neuronalNetwork.weightMatrices);
+        //
+        // var output = neuronalNetwork.calculateOutput(new Vector([0, 0]));
+        // console.log(JSON.stringify(output.array));
+        // var output = neuronalNetwork.calculateOutput(new Vector([1, 0]));
+        // console.log(JSON.stringify(output.array));
+        // var output = neuronalNetwork.calculateOutput(new Vector([0, 1]));
+        // console.log(JSON.stringify(output.array));
+        // var output = neuronalNetwork.calculateOutput(new Vector([1, 1]));
+        // console.log(JSON.stringify(output.array));
+
+
+
+        // var planes = [2, 1];
+        // var neuronalNetwork = new NeuronalNetwork(planes);
+        //
+        // neuronalNetwork.train(new Vector([0.7, 0.2]), new Vector([0.8]));
+        // console.log(JSON.stringify(neuronalNetwork.weightMatrices[0].array));
+        // var output = neuronalNetwork.calculateOutput(new Vector([0.7, 0.2]));
+        // console.log(JSON.stringify(output.array));
+        //
+        // neuronalNetwork.train(new Vector([0.7, 0.2]), new Vector([0.8]));
+        // console.log(JSON.stringify(neuronalNetwork.weightMatrices[0].array));
+        // var output = neuronalNetwork.calculateOutput(new Vector([0.7, 0.2]));
+        // console.log(JSON.stringify(output.array));
+        //
+        // neuronalNetwork.train(new Vector([0.7, 0.2]), new Vector([0.8]));
+        // console.log(JSON.stringify(neuronalNetwork.weightMatrices[0].array));
+        // var output = neuronalNetwork.calculateOutput(new Vector([0.7, 0.2]));
+        // console.log(JSON.stringify(output.array));
+
+
 
     </script>
 </body>
