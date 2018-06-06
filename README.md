@@ -4,9 +4,18 @@ This framework creates some neuronal networks. It shows and provides you a colle
 
 ## 0. Introduction
 
-This framework uses needs an analysis library like this: [js-analysis](https://github.com/bjoern-hempel/js-analysis)
+This framework uses needs two external git repositories:
 
-Coming soon..
+* [js-analysis](https://github.com/bjoern-hempel/js-analysis)
+* [js-testing-framework](https://github.com/bjoern-hempel/js-testing-framework)
+
+### 0.1 Checkout this project with submodules
+
+```bash
+user$ git clone git@github.com:friends-of-ai/create-neuronal-networks.git && cd create-neuronal-networks
+user$ git submodule init
+user$ git submodule update
+```
 
 ## 1. The elements
 
