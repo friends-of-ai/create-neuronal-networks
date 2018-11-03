@@ -80,7 +80,67 @@ var output = neuronalNetwork.calculateOutput(input);
 
 console.log(Math.round(output.array[0] * 10) / 10, Math.round(output.array[1] * 10) / 10);
 // prints 0.9 0.2
-```       
+```
+
+#### 1.3.4 Train and test the network II
+
+We want to have the double output value of the given input value:
+
+```javascript
+var planes = [1, 1, 1];
+var neuronalNetwork = new NeuronalNetwork(planes, true);
+
+/* the in- and outputs */
+var inputs    = new Array(
+    new Vector([0.1]),
+    new Vector([0.2]),
+    new Vector([0.3]),
+    new Vector([0.4]),
+    new Vector([0.5]),
+    new Vector([0.11])
+);
+var outputs = new Array(
+    new Vector([0.2]),
+    new Vector([0.4]),
+    new Vector([0.6]),
+    new Vector([0.8]),
+    new Vector([1.0]),
+    new Vector([0.22])
+);
+
+/* train the network */
+for (var i = 0; i < 1000; i++) {
+    for (var j = 0; j < inputs.length; j++) {
+        neuronalNetwork.train(inputs[j], outputs[j]);
+    }
+}
+
+/* the check values */
+var inputsTest = new Array(
+    new Vector([0.33]),
+    new Vector([0.12]),
+    new Vector([0.11]),
+    new Vector([0.44]),
+    new Vector([0.49]),
+    new Vector([0.39]),
+);
+
+/* check the trained network */
+for (var j = 0; j < inputs.length; j++) {
+    console.log(inputsTest[j].vector[0], neuronalNetwork.calculateOutput(inputsTest[j]).vector[0]);
+}
+```
+
+Prints
+
+```
+0.33 0.6874777236350406
+0.12 0.23842579104867254
+0.11 0.2269773560587364
+0.44 0.882471971205491
+0.49 0.9254848257237483
+0.39 0.8127789003178846
+```
 
 ## 2. Test the libraries
 
