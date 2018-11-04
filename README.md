@@ -62,6 +62,8 @@ console.log(JSON.stringify(output.array));
 
 #### 1.3.3 Train and test the network
 
+##### 1.3.3.1 I
+
 ```javascript
 var planes = [2, 2, 2];
 
@@ -79,10 +81,15 @@ for (var i = 0; i < 100; i++) {
 var output = neuronalNetwork.calculateOutput(input);
 
 console.log(Math.round(output.array[0] * 10) / 10, Math.round(output.array[1] * 10) / 10);
-// prints 0.9 0.2
 ```
 
-#### 1.3.4 Train and test the network II
+It prints
+
+```javascript
+0.9 0.2
+```
+
+##### 1.3.3.2 II
 
 We want to have the double output value of the given input value:
 
@@ -131,7 +138,7 @@ for (var j = 0; j < inputs.length; j++) {
 }
 ```
 
-Prints
+It prints
 
 ```
 0.33 0.6874777236350406
@@ -140,6 +147,54 @@ Prints
 0.44 0.882471971205491
 0.49 0.9254848257237483
 0.39 0.8127789003178846
+```
+
+##### 1.3.3.3 III
+
+XOR Function
+
+```javascript
+var planes = [2, 2, 1];
+var neuronalNetwork = new NeuronalNetwork(planes, true);
+
+var inputs    = new Array(
+    new Vector([0, 0]),
+    new Vector([0, 1]),
+    new Vector([1, 0]),
+    new Vector([1, 1])
+);
+var outputs = new Array(
+    new Vector([0]),
+    new Vector([1]),
+    new Vector([1]),
+    new Vector([0])
+);
+
+for (var i = 0; i < 3000; i++) {
+    for (var j = 0; j < inputs.length; j++) {
+        neuronalNetwork.train(inputs[j], outputs[j]);
+    }
+}
+
+var inputsTest = new Array(
+    new Vector([0, 0]),
+    new Vector([0, 1]),
+    new Vector([1, 0]),
+    new Vector([1, 1])
+);
+
+for (var j = 0; j < inputs.length; j++) {
+    console.log(inputsTest[j].vector[0], inputsTest[j].vector[1], neuronalNetwork.calculateOutput(inputsTest[j]).vector[0]);
+}
+```
+
+It prints
+
+```javascript
+0 0 0.02324451873204845
+0 1 0.9750358589087668
+1 0 0.9748872859116073
+1 1 0.03127867654707072
 ```
 
 ## 2. Test the libraries
