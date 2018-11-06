@@ -46,21 +46,86 @@
         //     new Matrix([[0.3, 0.7, 0.5], [0.6, 0.5, 0.2], [0.8, 0.1, 0.9]])
         // ];
         //
-        var weightMatrices2 = [
-            new Matrix([[0.3, 0.8, 0.5], [-0.2, -0.6, 0.7]]),
-            new Matrix([[0.2, 0.4, 0.3], [0.1, -0.4, 0.9]])
-        ];
+
+
+        var planes = [2, 2, 1];
+        var neuronalNetwork = new NeuronalNetwork(planes, true);
+
+        var inputs    = new Array(
+            new Vector([0, 0]),
+            new Vector([0, 1]),
+            new Vector([1, 0]),
+            new Vector([1, 1])
+        );
+        var outputs = new Array(
+            new Vector([0]),
+            new Vector([1]),
+            new Vector([1]),
+            new Vector([0])
+        );
+
+        for (var i = 0; i < 3000; i++) {
+            for (var j = 0; j < inputs.length; j++) {
+                neuronalNetwork.train(inputs[j], outputs[j]);
+            }
+        }
+
+        var inputsTest = new Array(
+            new Vector([0, 0]),
+            new Vector([0, 1]),
+            new Vector([1, 0]),
+            new Vector([1, 1])
+        );
+
+        for (var j = 0; j < inputs.length; j++) {
+            console.log(inputsTest[j].vector[0], inputsTest[j].vector[1], neuronalNetwork.calculateOutput(inputsTest[j]).vector[0]);
+        }
+
+
+
+
+        // var planes = [1, 1];
+        // var neuronalNetwork = new NeuronalNetwork(planes, true);
         //
-        // var planes = [2, 2, 2];
+        // var inputs    = new Array(
+        //     new Vector([0.1]),
+        //     new Vector([0.2]),
+        //     new Vector([0.3]),
+        //     new Vector([0.4]),
+        //     new Vector([0.5]),
+        //     new Vector([0.11])
+        // );
+        // var outputs = new Array(
+        //     new Vector([0.2]),
+        //     new Vector([0.4]),
+        //     new Vector([0.6]),
+        //     new Vector([0.8]),
+        //     new Vector([1.0]),
+        //     new Vector([0.22])
+        // );
         //
-        var neuronalNetwork = new NeuronalNetwork(weightMatrices2, true);
+        // for (var i = 0; i < 1000; i++) {
+        //     for (var j = 0; j < inputs.length; j++) {
+        //         neuronalNetwork.train(inputs[j], outputs[j]);
+        //     }
+        // }
+        //
+        // var inputsTest = new Array(
+        //     new Vector([0.33]),
+        //     new Vector([0.12]),
+        //     new Vector([0.11]),
+        //     new Vector([0.44]),
+        //     new Vector([0.49]),
+        //     new Vector([0.39]),
+        // );
+        //
+        // for (var j = 0; j < inputs.length; j++) {
+        //     console.log(inputsTest[j].vector[0], neuronalNetwork.calculateOutput(inputsTest[j]).vector[0]);
+        // }
 
-        var input    = new Vector([0.7, 0.6]);
-        var expected = new Vector([0.9, 0.2]);
 
-        var trainResult = neuronalNetwork.train(input, expected);
 
-        console.log(trainResult, neuronalNetwork.weightMatrices);
+
 
         // var output = neuronalNetwork.calculateOutput(input);
         // console.log(JSON.stringify(output.array));

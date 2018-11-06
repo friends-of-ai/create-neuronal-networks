@@ -80,6 +80,8 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
         this.learnRate = 1;
         this.name      = this.constructor.CLASS_NAME;
 
+        this.randomSeedNumber = 123456;
+
         this.assert(planes instanceof Array, 'NeuronalNetwork.constructor', this.constructor.ERROR_GIVEN_PARAMETER_IS_NO_ARRAY);
         this.assert(planes.length > 0, 'NeuronalNetwork.constructor', this.constructor.ERROR_ARRAY_MUST_BE_LONGER_THAN_ONE);
 
@@ -118,7 +120,7 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
             for (var j = 0; j < this.planes[i + 1]; j++) {
                 weightMatrix[j] = [];
                 for (var k = 0; k < this.planes[i] + (this.bias ? 1 : 0); k++) {
-                    weightMatrix[j][k] = this.getRandomNumber();
+                    weightMatrix[j][k] = this.seedRandom() / 3;
                 }
             }
 
@@ -273,6 +275,30 @@ class NeuronalNetwork extends BaseNeuronalNetwork {
      */
     getRandomNumber() {
         return Math.random() / 3;
+    }
+
+    /**
+     * Generates a seeded random number.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-22)
+     * @param {Number=} min (optional)
+     * @param {Number=} max (optional)
+     * @returns {Number}
+     */
+    seedRandom(min, max) {
+        /* set min and max to default if needed */
+        var max = max || 1;
+        var min = min || 0;
+
+        /* use only the digits from the 5th position of the sin function */
+        var number = Math.sin(this.randomSeedNumber++) * 10000;
+
+        /* Math.abs and use only the fractional part of the number */
+        var rnd = number - Math.floor(number);
+
+        /* return the seeded random number */
+        return min + rnd * (max - min);
     }
 
     /**
